@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration status="debug">
+
+    <Appenders>
+        <!-- 콘솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] %m%n"/>
+        </Console>
+    </Appenders>
+
+    <!--log4j2.xml 에서 설정한 level보다 상위 level 만 출력-->
+    <loggers>
+        <root level="debug" additivity="true">
+            <AppenderRef ref="console"/>
+        </root>
+    </loggers>
+
+</configuration>

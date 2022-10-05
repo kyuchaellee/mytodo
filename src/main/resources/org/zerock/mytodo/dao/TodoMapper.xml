@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mytodo.dao.TodoMapper">
+    <sql id="search">
+        <where>
+            <if test="keyword != null">
+                and memo like concat('%',#{keyword},'%')
+            </if>
+            <if test="from != null">
+                and dueDate between #{from}and#{to}
+            </if>
+            <if test ="complete">
+                and complete = #{complete}
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="selectList" resultType="org.zerock.mytodo.dto.TodoDTO">
+        select * from tbl_todo;
+    </select>
+
+    <select id="getList" resultType="org.zerock.mytodo.dto.TodoDTO">
+        select * from tbl_todo
+
+        <include refid="search"></include>
+
+        order by tno desc limit #{skip}, #{size}
+
+    </select>
+
+    <select id="getTotal" resultType="int">
+        select count(tno) from tbl_todo
+        <include refid="search"></include>
+    </select>
+
+    <select id="selectAll" resultType="org.zerock.mytodo.dto.TodoDTO">
+        select * from tbl_todo order by tno desc
+    </select>
+
+    <select id="selectDetail" resultType="org.zerock.mytodo.dto.TodoDTO">
+        select * from tbl_todo where tno=#{tno}
+    </select>
+</mapper>
